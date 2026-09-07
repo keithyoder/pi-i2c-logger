@@ -46,6 +46,7 @@ class FuelUsed(Sensor):
     MAX_INTERVAL_SECONDS = 3.0      # normal cadence is ~1s; anything longer
                                      # (restart, hang, slow query) gets clamped
                                      # rather than multiplied straight into the total
+    CALIBRATION_FACTOR = 1.685
 
     def __init__(self, device):
         super().__init__(device, "obd_fuel_used_ml", "mL", precision=3)
@@ -88,7 +89,7 @@ class FuelUsed(Sensor):
                 dt = min(now - self._last_time, self.MAX_INTERVAL_SECONDS)
             self._last_time = now
 
-            fuel_used_ml = fuel_vol_l_s * dt * 1000.0
+            fuel_used_ml = fuel_vol_l_s * dt * 1000.0 * self.CALIBRATION_FACTOR
             return super().value(fuel_used_ml)
         except:
             self._last_time = now
