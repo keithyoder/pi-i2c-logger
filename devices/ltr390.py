@@ -2,6 +2,7 @@ from devices.device import Device
 from sensors.ltr390.ambient_light import AmbientLight
 from sensors.ltr390.lux import Lux
 from sensors.ltr390.uv_index import UVIndex
+from sensors.ltr390.uv_raw import UVRaw
 
 class LTR390(Device):
     def __init__(self):
@@ -18,7 +19,8 @@ class LTR390(Device):
         self.sensors = [
             AmbientLight(self.device),
             Lux(self.device),
-            UVIndex(self.device)
+            UVIndex(self.device),
+            UVRaw(self.device)
         ]
 
     def is_connected(self):

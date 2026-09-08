@@ -1,3 +1,5 @@
+import logging
+
 from sensors.sensor import Sensor
 from dash_daq import Thermometer
 
@@ -8,7 +10,8 @@ class Temperature(Sensor):
     def value(self):
         try:
             return super().value(self.device.temperature)
-        except:
+        except Exception as e:
+            logging.warning(f"[BMP581 Temperature] read failed: {e}")
             return None
 
     def dashboard_gauge(self):

@@ -1,3 +1,5 @@
+import logging
+
 from sensors.sensor import Sensor
 from dash_daq import LEDDisplay
 
@@ -8,7 +10,8 @@ class Pressure(Sensor):
     def value(self):
         try:
             return super().value(self.device.pressure)
-        except:
+        except Exception as e:
+            logging.warning(f"[BMP581 Pressure] read failed: {e}")
             return None
 
     def dashboard_gauge(self):

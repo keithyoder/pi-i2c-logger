@@ -1,3 +1,6 @@
+from datetime import datetime, UTC
+import logging
+
 from devices.device import Device
 from sensors.bmp581.temperature import Temperature
 from sensors.bmp581.pressure import Pressure
@@ -20,4 +23,9 @@ class BMP581(Device):
         self.values = {}
 
     def is_connected(self):
-        return False if self.device is None else self.device.data_ready
+        if self.device is None:
+            return False
+        ready = self.device.data_ready
+        if not ready:
+            logging.warning(f"[BMP581] data_ready=False at {datetime.now(UTC)}")
+        return ready
