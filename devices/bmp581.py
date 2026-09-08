@@ -27,5 +27,8 @@ class BMP581(Device):
             return False
         ready = self.device.data_ready
         if not ready:
-            logging.warning(f"[BMP581] data_ready=False at {datetime.now(UTC)}")
+            logging.warning(
+                f"[BMP581] data_ready=False mode={self.device.mode} "
+                f"odr={self.device.output_data_rate} at {datetime.now(UTC)}"
+            )
         return ready
