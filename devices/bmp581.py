@@ -10,9 +10,10 @@ class BMP581(Device):
         super().__init__("BMP581")
         try:
             import board
-            from adafruit_bmp5xx import BMP5XX_I2C
+            from adafruit_bmp5xx import BMP5XX_I2C, BMP5XX_ODR_10_HZ
             from board import I2C
             self.device = BMP5XX_I2C(board.I2C())
+            self.device.output_data_rate = BMP5XX_ODR_10_HZ
             self.device.sea_level_pressure = sea_level_pressure_hpa
         except:
             self.device = None
